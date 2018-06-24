@@ -1,7 +1,7 @@
 {
   "name": "@headnhead/astra-framework",
-  "version": "0.0.1",
-  "main": "./bin/index.js",
+  "version": "0.0.2",
+  "main": "index.js",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch"
