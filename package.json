@@ -1,7 +1,6 @@
 {
-  "name": "astra-framework",
+  "name": "@headnhead/astra-framework",
   "version": "0.0.1",
-  "description": "",
   "main": "./bin/index.js",
   "scripts": {
     "test": "jest",
@@ -39,5 +38,12 @@
     "koa-router": "^7.4.0",
     "lodash": "^4.17.10",
     "winston": "^3.0.0"
-  }
+  },
+  "bin": {
+    "astra-framework": "index.js"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "description": ""
 }
