@@ -1,13 +1,40 @@
+const {
+  path,
+} = require('ramda');
 const Koa = require('koa');
 const Container = require('./src/container');
+const Config = require('./src/config');
+const loggerProvider = require('./providers/logger-provider');
 
-// Create Koa instance
-const server = new Koa();
+class Astra extends Koa {
+  constructor(options) {
+    super();
 
-// Register Service Container
-const app = new Container();
+    // Register Service Container
+    this.context.container = new Container();
+    this.context.make = this.context.container.make;
 
-server.context.container = app;
-server.context.make = app.make;
+    // Register services
+    this.resolveBaseServiceProviders(options);
+  }
 
-module.exports = server;
+  resolveBaseServiceProviders(options) {
+    this.context.container.factory('config', () => {
+      const config = new Config();
+
+      if (path('configDir', options)) {
+        config.dir(options.configDir);
+      }
+
+      return config;
+    });
+
+    this.context.container.factory('logger', loggerProvider);
+  }
+
+  make(...args) {
+    return this.context.make(...args);
+  }
+}
+
+module.exports = Astra;

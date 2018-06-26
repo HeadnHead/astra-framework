@@ -8,25 +8,46 @@ const {
   drop,
   is,
 } = require('ramda');
+const fs = require('fs');
+const path = require('path');
 
-const splitPathToArray = split(/\.|\[|\]\.|\]/i);
+const getPathToProperty = split(/\.|\[|\]\.|\]/i);
 
-const getProperty = path => when(always(!isEmpty(path)), getPath(path));
+const getProperty = property => when(always(!isEmpty(property)), getPath(property));
 
 const Config = function constructor() {
   this.store = new Map();
 };
 
-Config.prototype.get = function get(path) {
-  const arrayedPath = splitPathToArray(path);
-  const store = this.store.get(head(arrayedPath));
-  return getProperty(drop(1, arrayedPath))(store);
+Config.prototype.get = function get(property) {
+  const pathToProperty = getPathToProperty(property);
+  const store = this.store.get(head(pathToProperty));
+  return getProperty(drop(1, pathToProperty))(store);
 };
 
 Config.prototype.set = function set(name, config) {
   if (is(String, name) && is(Object, config)) {
     this.store.set(name, config);
   }
+};
+
+Config.prototype.file = function getConfigFromFile(file) {
+  if (!fs.existsSync(file)) {
+    throw new Error('File does not exist.');
+  }
+
+  const { name } = path.parse(file);
+
+  this.store.set(name, require(file)); // eslint-disable-line
+};
+
+Config.prototype.dir = function getConfigsFromDirectory(directory) {
+  if (!fs.existsSync(directory)) {
+    throw new Error('directory does not exist.');
+  }
+
+  fs.readdirSync(directory)
+    .forEach(file => this.file(path.resolve(directory, file)));
 };
 
 Config.prototype.clear = function clear() {

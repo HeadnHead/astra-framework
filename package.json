@@ -1,6 +1,6 @@
 {
   "name": "@headnhead/astra-framework",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/HeadnHead/astra-framework#readme",
   "jest": {
-    "testRegex": "tests/.*\\.(js|jsx)$"
+    "testRegex": "tests/.*\\.test\\.(js|jsx)$"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -37,7 +37,7 @@
     "koa-helmet": "^4.0.0",
     "koa-router": "^7.4.0",
     "lodash": "^4.17.10",
-    "winston": "^3.0.0"
+    "winston": "2.4.3"
   },
   "bin": {
     "astra-framework": "index.js"
