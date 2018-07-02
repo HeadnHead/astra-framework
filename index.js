@@ -4,6 +4,7 @@ const {
 const Koa = require('koa');
 const Container = require('./src/container');
 const Config = require('./src/config');
+const useResponser = require('./src/responser');
 const loggerProvider = require('./providers/logger-provider');
 
 class Astra extends Koa {
@@ -30,6 +31,8 @@ class Astra extends Koa {
     });
 
     this.context.container.factory('logger', loggerProvider);
+
+    this.use(useResponser);
   }
 
   make(...args) {
