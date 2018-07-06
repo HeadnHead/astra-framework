@@ -2,6 +2,7 @@ const {
   path,
 } = require('ramda');
 const Koa = require('koa');
+const Cookies = require('cookies');
 const Container = require('./src/container');
 const Config = require('./src/config');
 const useResponser = require('./src/responser');
@@ -37,6 +38,13 @@ class Astra extends Koa {
 
   make(...args) {
     return this.context.make(...args);
+  }
+
+  createContext(req, res) {
+    const { make } = this.context;
+    const context = super.createContext(req, res);
+    context.make = make.bind(context);
+    return context;
   }
 }
 

@@ -12,9 +12,18 @@ beforeEach(() => {
 describe('Application', () => {
   describe('services', () => {
     describe('Config', () => {
-      it('Config instance test', () => {
+      it('Config instance test', async () => {
         expect(app.make('config'))
           .toBeInstanceOf(Config);
+
+        app.use(async ({ make }) => {
+          expect(make('config'))
+            .toBeInstanceOf(Config);
+        });
+
+        const response = await request(app.callback()).get('');
+
+        expect(response.status).toBe(404);
       });
     });
 
