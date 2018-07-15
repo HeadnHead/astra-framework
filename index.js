@@ -2,7 +2,6 @@ const {
   path,
 } = require('ramda');
 const Koa = require('koa');
-const Cookies = require('cookies');
 const Container = require('./src/container');
 const Config = require('./src/config');
 const useResponser = require('./src/responser');
