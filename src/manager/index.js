@@ -31,10 +31,11 @@ class Manager extends Magicable {
   }
 
   __get(prop, receiver) {
-    if (Reflect.has(this.driver(), prop)) {
-      return Reflect.get(this.driver(), prop, receiver);
+    if (Reflect.has(this, prop)) {
+      return Reflect.get(this, prop, receiver);
     }
-    return Reflect.get(this, prop, receiver);
+
+    return Reflect.get(this.driver(), prop, receiver);
   }
 }
 
