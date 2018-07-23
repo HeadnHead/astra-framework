@@ -40,9 +40,10 @@ class Astra extends Koa {
   }
 
   createContext(req, res) {
-    const { make } = this.context;
+    const { make, container } = this.context;
     const context = super.createContext(req, res);
     context.make = make.bind(context);
+    context.container = container;
     return context;
   }
 }
