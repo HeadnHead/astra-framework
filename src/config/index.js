@@ -46,8 +46,11 @@ Config.prototype.dir = function getConfigsFromDirectory(directory) {
     throw new Error('directory does not exist.');
   }
 
-  fs.readdirSync(directory)
-    .forEach(file => this.file(path.resolve(directory, file)));
+  const files = fs.readdirSync(directory);
+
+  for (let i = files.length - 1; i >= 0; i - 1) {
+    this.file(path.resolve(directory, files[i]));
+  }
 };
 
 Config.prototype.clear = function clear() {

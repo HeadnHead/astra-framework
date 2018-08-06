@@ -1,6 +1,3 @@
-const {
-  path,
-} = require('ramda');
 const Koa = require('koa');
 const Container = require('./src/container');
 const Config = require('./src/config');
@@ -23,7 +20,7 @@ class Astra extends Koa {
     this.context.container.factory('config', () => {
       const config = new Config();
 
-      if (path('configDir', options)) {
+      if (options.configDir) {
         config.dir(options.configDir);
       }
 
